@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saat Uygulaması</title>
+    <style>
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+
+        body {
+            line-height: 1;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: #0b0b0b;
+            color: whitesmoke;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        blockquote, q {
+            quotes: none;
+        }
+
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        #app {
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        .clock {
+            position: relative;
+            color: whitesmoke;
+            font-size: 5vh !important;
+            margin: auto 0;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="clock">
+        <span id="clock"></span>
+    </div>
+</div>
+</body>
+<script>
+
+    /**
+     *The number that given, if less than 10 returns adding a leading 0
+     */
+
+    Number.prototype.addZero = function () {
+
+        if (this < 10) {
+            return `0${this}`
+        }
+        return `${this}`
+
+    }
+
+    /**
+     * Returns dd MM YYYY H:İ:S format
+     */
+
+    Date.prototype.getTurkishDate = function () {
+
+        const days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi']
+        const months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağutos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
+        const date = this
+        const hour = date.getHours().addZero()
+        const minute = date.getMinutes().addZero()
+        const second = date.getSeconds().addZero()
+        const year = date.getFullYear()
+        const month = months[date.getMonth()]
+        const day = days[date.getDay()]
+        const numberOfDay = date.getDate()
+
+        return `${numberOfDay} ${month} ${year}, ${day} günü. Saat: ${hour}:${minute}:${second}`
+
+    }
+
+
+    const name = prompt('İsminiz nedir?')
+    document.getElementsByClassName('clock')[0].prepend(`Merhaba, sayın ${name}!`)
+
+    const date = new Date()
+    document.getElementById('clock').textContent = date.getTurkishDate()
+
+    setInterval(() => {
+        const iterDate = new Date()
+        document.getElementById('clock').textContent = `${date.getTurkishDate()} tarihi itibariyle sisteme giriş yapmış bulunmaktasınız! Şuan ise tam olarak: ${iterDate.getTurkishDate()}`
+    }, 1000)
+
+</script>
+</html>
